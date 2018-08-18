@@ -117,6 +117,9 @@ RUN mkdir -p /var/run/php/ && touch /var/run/php/php7.2-fpm.pid
 RUN touch /root/.bashrc && \
     echo "export TERM=xterm-256color" >> /root/.bashrc
 
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/php7.2-fpm.log
+
 # Internal Port Expose
 EXPOSE 9000 22
 
