@@ -86,7 +86,6 @@ RUN mkdir /root/.drush/
 RUN mkdir -p /app/www
 WORKDIR /app/www
 
-RUN mkdir -p /var/run/sshd /var/log/supervisor && \
 COPY ./config/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
 COPY ./config/www.conf /etc/php/7.2/fpm/pool.d/www.conf
 COPY ./config/php.ini /etc/php/7.2/fpm/php.ini
