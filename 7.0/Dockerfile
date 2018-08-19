@@ -65,7 +65,6 @@ RUN apt-get update \
         zip unzip \
         rsync \
         php-mysql && \
-     pecl install apcu-5.1.3 && \
     # Install Composer
     cd $HOME && \
         curl -sS https://getcomposer.org/installer | php && \

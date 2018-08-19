@@ -32,7 +32,6 @@ RUN apt-get update \
         php7.2-mbstring \
         php7.2-soap \
         php7.2-json \
-        php7.2-opcache \
         php7.2-bcmath \
         php7.2-pspell \
         php7.2-sqlite3 \
@@ -57,14 +56,12 @@ RUN apt-get update \
         build-essential \
         supervisor \
         imagemagick \
-        ssh \
         git \
         ssmtp \
         mysql-client \
         zip unzip \
         rsync \
         php-mysql && \
-     pecl install apcu-5.1.3 && \
     # Install Composer
     cd $HOME && \
         curl -sS https://getcomposer.org/installer | php && \
@@ -98,10 +95,7 @@ RUN mkdir -p /var/run/php/ && touch /var/run/php/php7.2-fpm.pid
 RUN touch /root/.bashrc && \
     echo "export TERM=xterm-256color" >> /root/.bashrc
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/php7.2-fpm.log
-
 # Internal Port Expose
-EXPOSE 9000 22
+EXPOSE 9000
 
 CMD ["/usr/sbin/php-fpm7.2","--fpm-config","/etc/php/7.2/fpm/php-fpm.conf"]
