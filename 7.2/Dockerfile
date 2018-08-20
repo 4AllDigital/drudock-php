@@ -32,6 +32,7 @@ RUN apt-get update \
         php7.2-mbstring \
         php7.2-soap \
         php7.2-json \
+        php7.2-opcache \
         php7.2-bcmath \
         php7.2-pspell \
         php7.2-sqlite3 \
@@ -56,12 +57,14 @@ RUN apt-get update \
         build-essential \
         supervisor \
         imagemagick \
+        ssh \
         git \
         ssmtp \
         mysql-client \
         zip unzip \
         rsync \
         php-mysql && \
+     pecl install apcu-5.1.3 && \
     # Install Composer
     cd $HOME && \
         curl -sS https://getcomposer.org/installer | php && \
