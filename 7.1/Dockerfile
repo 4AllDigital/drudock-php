@@ -89,26 +89,11 @@ RUN mkdir -p /var/run/sshd /var/log/supervisor && \
     usermod -u 1000 www-data && \
     usermod -a -G users www-data
 
-COPY ./config/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./config/php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf
 COPY ./config/www.conf /etc/php/7.1/fpm/pool.d/www.conf
 COPY ./config/php.ini /etc/php/7.1/fpm/php.ini
 COPY ./config/cli-php.ini /etc/php/7.1/fpm/cli-php.ini
 COPY ./config/htaccess /tmp/.htaccess
-
-COPY ./ssh/moduli /etc/ssh/moduli
-COPY ./ssh/ssh_config /etc/ssh/ssh_config
-COPY ./ssh/ssh_host_dsa_key /etc/ssh/ssh_host_dsa_key
-COPY ./ssh/ssh_host_dsa_key.pub /etc/ssh/ssh_host_dsa_key.pub
-COPY ./ssh/ssh_host_ecdsa_key /etc/ssh/ssh_host_ecdsa_key
-COPY ./ssh/ssh_host_ecdsa_key.pub /etc/ssh/ssh_host_ecdsa_key.pub
-COPY ./ssh/ssh_host_ed25519_key /etc/ssh/ssh_host_ed25519_key
-COPY ./ssh/ssh_host_ed25519_key.pub /etc/ssh/ssh_host_ed25519_key.pub
-COPY ./ssh/ssh_host_rsa_key /etc/ssh/ssh_host_rsa_key
-COPY ./ssh/ssh_host_rsa_key.pub /etc/ssh/ssh_host_rsa_key.pub
-COPY ./ssh/sshd_config /etc/ssh/sshd_config
-
-RUN chmod 400 /etc/ssh/ssh_*
 
 RUN mkdir -p /var/run/php/ && touch /var/run/php/php7.1-fpm.pid
 
@@ -117,6 +102,6 @@ RUN touch /root/.bashrc && \
     echo "export TERM=xterm-256color" >> /root/.bashrc
 
 # Internal Port Expose
-EXPOSE 9000 22
+EXPOSE 9000
 
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/sbin/php-fpm7.1","--fpm-config","/etc/php/7.1/fpm/php-fpm.conf"]
