@@ -88,6 +88,7 @@ WORKDIR /app/www
 
 COPY ./config/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
 COPY ./config/www.conf /etc/php/7.2/fpm/pool.d/www.conf
+COPY ./config/docker.conf /etc/php/7.2/fpm/pool.d/docker.conf
 COPY ./config/php.ini /etc/php/7.2/fpm/php.ini
 COPY ./config/cli-php.ini /etc/php/7.2/fpm/cli-php.ini
 COPY ./config/htaccess /tmp/.htaccess
