@@ -83,8 +83,8 @@ RUN /usr/local/bin/composer global require drush/drush:8.1.16 && \
 
 RUN mkdir /root/.drush/
 
-RUN mkdir -p /app/www
-WORKDIR /app/www
+RUN mkdir -p /app/web
+WORKDIR /app/web
 
 COPY ./config/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
 COPY ./config/www.conf /etc/php/7.2/fpm/pool.d/www.conf
