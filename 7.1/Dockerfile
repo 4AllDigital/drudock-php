@@ -98,7 +98,7 @@ RUN mkdir -p /app/web
 WORKDIR /app/web
 
 RUN mkdir -p /var/log/supervisor && \
-    usermod -u 500 www-data && \
+    usermod -u 1000 www-data && \
     usermod -a -G users www-data
 
 COPY ./config/php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf
