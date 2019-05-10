@@ -86,6 +86,10 @@ RUN mkdir /root/.drush/
 RUN mkdir -p /app/web
 WORKDIR /app/web
 
+RUN mkdir -p /var/log/supervisor && \
+    usermod -u 500 www-data && \
+    usermod -a -G users www-data
+
 COPY ./config/php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
 COPY ./config/www.conf /etc/php/7.2/fpm/pool.d/www.conf
 COPY ./config/docker.conf /etc/php/7.2/fpm/pool.d/docker.conf

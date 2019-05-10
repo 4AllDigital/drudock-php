@@ -94,11 +94,11 @@ RUN /usr/local/bin/composer global require drush/drush:8.1.16 && \
 
 RUN mkdir /root/.drush/
 
-RUN mkdir -p /app/www
-WORKDIR /app/www
+RUN mkdir -p /app/web
+WORKDIR /app/web
 
-RUN mkdir -p /var/run/sshd /var/log/supervisor && \
-    usermod -u 1000 www-data && \
+RUN mkdir -p /var/log/supervisor && \
+    usermod -u 500 www-data && \
     usermod -a -G users www-data
 
 COPY ./config/php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf
