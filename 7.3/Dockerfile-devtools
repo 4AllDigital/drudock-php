@@ -32,4 +32,4 @@ RUN echo 'root:root' | chpasswd && \
     sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     mkdir -p /root/.ssh/
 
-COPY ./config/20-xdebug.ini /etc/php/7.2/fpm/conf.d/20-xdebug.ini
+COPY ./config/20-xdebug.ini /etc/php/7.3/fpm/conf.d/20-xdebug.ini
