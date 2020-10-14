@@ -78,7 +78,7 @@ RUN apt-get update \
     && apt-get clean
 
 # Install useful Drush
-RUN /usr/local/bin/composer global require drush/drush:8.1.16 && \
+RUN /usr/local/bin/composer global require drush/drush:9.7.1 && \
     ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush
 
 RUN mkdir /root/.drush/
