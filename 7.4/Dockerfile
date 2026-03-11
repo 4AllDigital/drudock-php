@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.22
+FROM phusion/baseimage:master-amd64
 MAINTAINER 4 All Digital  "joe@4alldigital.com"
 
 # Required to run some apt-get commands (fix for Unable to locate package php5 issue)
@@ -10,7 +10,7 @@ ENV LANG       en_GB.UTF-8
 ENV LC_ALL     en_GB.UTF-8
 
 RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends software-properties-common python-software-properties && \
+    apt-get install -y --no-install-recommends software-properties-common && \
     add-apt-repository ppa:ondrej/php && \
     rm -fr /tmp/* /var/lib/apt/lists/* /var/tmp/* \
     && apt-get autoremove -y \
@@ -22,7 +22,7 @@ RUN apt-get update \
         php7.4-fpm \
         php7.4-cli \
         php7.4-common \
-        php-redis \
+        php7.4-redis \
         php7.4-curl \
         php7.4-mysql \
         php7.4-gd \
@@ -78,7 +78,7 @@ RUN cd $HOME && \
 
 # Install useful Drush
 RUN /usr/local/bin/composer global require drush/drush:^10.0.0 && \
-    ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush
+    ln -s /root/.config/composer/vendor/drush/drush/drush /usr/local/bin/drush
 
 RUN mkdir /root/.drush/
 
@@ -95,6 +95,8 @@ COPY ./config/docker.conf /etc/php/7.4/fpm/pool.d/docker.conf
 COPY ./config/php.ini /etc/php/7.4/fpm/php.ini
 COPY ./config/cli-php.ini /etc/php/7.4/fpm/cli-php.ini
 COPY ./config/htaccess /tmp/.htaccess
+COPY ./config/mysql.conf /etc/mysql/conf.d/mysql.cnf
+COPY ./config/mysql.conf /etc/mysql/conf.d/test.cnf
 
 RUN mkdir -p /var/run/php/ && touch /var/run/php/php7.4-fpm.pid
 

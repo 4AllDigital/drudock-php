@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.22
+FROM phusion/baseimage:master-amd64
 MAINTAINER 4 All Digital  "joe@4alldigital.com"
 
 # Required to run some apt-get commands (fix for Unable to locate package php5 issue)
@@ -10,25 +10,29 @@ ENV LANG       en_GB.UTF-8
 ENV LC_ALL     en_GB.UTF-8
 
 RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends software-properties-common python-software-properties && \
-    add-apt-repository ppa:ondrej/php && \
-    rm -fr /tmp/* /var/lib/apt/lists/* /var/tmp/* \
+    apt-get install -y --no-install-recommends software-properties-common
+
+# RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" >> /etc/apt/sources.list
+# RUN echo "deb-src http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" >> /etc/apt/sources.list
+
+RUN add-apt-repository ppa:ondrej/php
+RUN rm -fr /tmp/* /var/lib/apt/lists/* /var/tmp/* \
     && apt-get autoremove -y \
     && apt-get autoclean \
     && apt-get clean
 
-RUN apt-get update \
-    && apt-get -q install -y --no-install-recommends \
+RUN apt-get update
+RUN apt-get -q install -y \
         php7.3-fpm \
         php7.3-cli \
         php7.3-common \
-        php-redis \
+        php7-redis \
         php7.3-curl \
         php7.3-mysql \
         php7.3-gd \
         php7.3-zip \
         php7.3-xml \
-        php7.1-mcrypt \
+        php7.3-mcrypt \
         php7.3-mbstring \
         php7.3-soap \
         php7.3-json \
@@ -78,7 +82,7 @@ RUN cd $HOME && \
 
 # Install useful Drush
 RUN /usr/local/bin/composer global require drush/drush:^10.0.0 && \
-    ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush
+    ln -s /root/.config/composer/vendor/drush/drush/drush /usr/local/bin/drush
 
 RUN mkdir /root/.drush/
 
@@ -95,6 +99,7 @@ COPY ./config/docker.conf /etc/php/7.3/fpm/pool.d/docker.conf
 COPY ./config/php.ini /etc/php/7.3/fpm/php.ini
 COPY ./config/cli-php.ini /etc/php/7.3/fpm/cli-php.ini
 COPY ./config/htaccess /tmp/.htaccess
+COPY ./config/mysql.conf /etc/mysql/conf.d/mysql.cnf
 
 RUN mkdir -p /var/run/php/ && touch /var/run/php/php7.3-fpm.pid
 

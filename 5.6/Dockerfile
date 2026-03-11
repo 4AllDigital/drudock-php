@@ -13,7 +13,7 @@ ENV XHPROF_VERSION 0.9.4
 ENV XDEBUG_VERSION 2.4.0
 ENV XDEBUG_MD5 a9bc9c6b9e8bc913fb1f7c6f6d19f6222d430414
 
-RUN apt-get -y update && apt-get install -y --no-install-recommends software-properties-common python-software-properties && \
+RUN apt-get -y update && apt-get install -y --no-install-recommends software-properties-common && \
     add-apt-repository ppa:ondrej/php && \
     apt-get update -y && \
     rm -fr /tmp/* /var/lib/apt/lists/* /var/tmp/* \
@@ -79,7 +79,7 @@ COPY config/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Install useful Drush
 RUN /usr/local/bin/composer global require drush/drush:8.1.2 && \
-    ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush
+    ln -s /root/.config/composer/vendor/drush/drush/drush /usr/local/bin/drush
 
 # Setup SSH for behat usage between containers
 RUN echo 'root:root' | chpasswd && \
